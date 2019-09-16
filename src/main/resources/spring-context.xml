@@ -7,10 +7,31 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-<!--    <bean id="memory" class="ru.job4j.MemoryStorage"/>-->
-<!--    <bean id="storage" class="ru.job4j.UserStorage">-->
-<!--        <constructor-arg name="storage" ref="memory"/>-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://127.0.0.1:5432/spring" />
+        <property name="username" value="postgres" />
+        <property name="password" value="password" />
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:ru/job4j/hibernate.cfg.xml" />
+    </bean>
+
+
+
+<!--    <bean id="stor" class="ru.job4j.JdbcStorage">-->
+<!--        <property name="factory" ref="sessionFactory"/>-->
 <!--    </bean>-->
 
-    <context:component-scan base-package="ru.job4j"/>
+    <bean id="stor" class="ru.job4j.MemoryStorage"/>
+
+    <bean id="storage" class="ru.job4j.UserStorage">
+        <constructor-arg name="storage" ref="stor"/>
+    </bean>
+
+
 </beans>

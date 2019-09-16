@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL93Dialect</property>
+        <property name="show_sql">true</property>
+
+        <mapping class="ru.job4j.User"/>
+    </session-factory>
+</hibernate-configuration>
